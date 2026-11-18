@@ -163,3 +163,10 @@ void turn_face_counter_clockwise(char face, Cube *cube)
     cube->stickers[layer[8]] = cube->stickers[layer[11]];
     cube->stickers[layer[11]] = temp;
 }
+
+void turn_face_clockwise(char face, Cube *cube)
+{
+    turn_face_counter_clockwise(face, cube);
+    turn_face_counter_clockwise(face, cube);
+    turn_face_counter_clockwise(face, cube);
+}
