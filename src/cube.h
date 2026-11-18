@@ -85,13 +85,9 @@ enum kociemba
     B8 = 53
 };
 
-const int layer_stickers[6][12] = {
-    U_FACE_LAYER_STICKER,
-    R_FACE_LAYER_STICKER,
-    F_FACE_LAYER_STICKER,
-    D_FACE_LAYER_STICKER,
-    L_FACE_LAYER_STICKER,
-    B_FACE_LAYER_STICKER};
+extern const int layer_stickers[6][12];
 
 void turn_face_counter_clockwise(char face, Cube *cube);
 void turn_face_clockwise(char face, Cube *cube);
+void init_cube(Cube *cube);
+void print_facelet(Cube *cube);

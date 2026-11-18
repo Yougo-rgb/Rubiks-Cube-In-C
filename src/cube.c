@@ -1,4 +1,25 @@
 #include "cube.h"
+#include <stdio.h>
+
+const int layer_stickers[6][12] = {
+    U_FACE_LAYER_STICKER,
+    R_FACE_LAYER_STICKER,
+    F_FACE_LAYER_STICKER,
+    D_FACE_LAYER_STICKER,
+    L_FACE_LAYER_STICKER,
+    B_FACE_LAYER_STICKER};
+
+void init_cube(Cube *cube)
+{
+    const char colors[6] = {'U', 'R', 'F', 'D', 'L', 'B'};
+    for (int f = 0; f < 6; f++)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            cube->stickers[f * 9 + i] = colors[f];
+        }
+    }
+}
 
 void turn_face_counter_clockwise(char face, Cube *cube)
 {
@@ -76,4 +97,15 @@ void turn_face_clockwise(char face, Cube *cube)
     turn_face_counter_clockwise(face, cube);
     turn_face_counter_clockwise(face, cube);
     turn_face_counter_clockwise(face, cube);
+}
+
+void print_facelet(Cube *cube)
+{
+    const char *faces[] = {"U", "R", "F", "D", "L", "B"};
+    printf("===CUBE STATE===\n");
+    for (int f = 0; f < 6; f++)
+    {
+        printf("%s: %.9s\n", faces[f], &cube->stickers[f * 9]);
+    }
+    printf("================\n");
 }
