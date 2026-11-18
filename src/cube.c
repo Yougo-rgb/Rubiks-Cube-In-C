@@ -13,12 +13,7 @@
 
 typedef struct
 {
-    char u_face[FACE_STICKER_NUMBER];
-    char r_face[FACE_STICKER_NUMBER];
-    char f_face[FACE_STICKER_NUMBER];
-    char d_face[FACE_STICKER_NUMBER];
-    char l_face[FACE_STICKER_NUMBER];
-    char b_face[FACE_STICKER_NUMBER];
+    char stickers[54]
 } Cube;
 
 enum kociemba
@@ -90,31 +85,47 @@ enum kociemba
     B8 = 53
 };
 
+const int layer_stickers[6][12] = {
+    U_FACE_LAYER_STICKER,
+    R_FACE_LAYER_STICKER,
+    F_FACE_LAYER_STICKER,
+    D_FACE_LAYER_STICKER,
+    L_FACE_LAYER_STICKER,
+    B_FACE_LAYER_STICKER};
+
 void turn_face_counter_clockwise(char face, Cube *cube)
 {
     char temp;
 
     // Set the face to turn
     char *selected_face;
+    const int *layer;
+    int face_start_sticker;
     switch (face)
     {
     case 'U':
-        selected_face = cube->u_face;
-        break;
-    case 'F':
-        selected_face = cube->f_face;
+        layer = layer_stickers[0];
+        face_start_sticker = U0;
         break;
     case 'R':
-        selected_face = cube->r_face;
+        layer = layer_stickers[1];
+        face_start_sticker = R0;
+        break;
+    case 'F':
+        layer = layer_stickers[2];
+        face_start_sticker = F0;
         break;
     case 'D':
-        selected_face = cube->d_face;
+        layer = layer_stickers[3];
+        face_start_sticker = D0;
         break;
     case 'L':
-        selected_face = cube->l_face;
+        layer = layer_stickers[4];
+        face_start_sticker = L0;
         break;
     case 'B':
-        selected_face = cube->b_face;
+        layer = layer_stickers[5];
+        face_start_sticker = B0;
         break;
     default:
         return;
