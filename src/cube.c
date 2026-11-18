@@ -1,9 +1,9 @@
 #define FACE_STICKER_NUMBER 9
 
 // All 12 stickers around a specific face
-// Edge permutation, index: 1, 4, 7, 11
+// Edge permutation, index: 1, 4, 7, 10
 // Corner A permutation index: 0, 3, 6, 9
-// Corner B permutation index: 2, 5, 8, 10
+// Corner B permutation index: 2, 5, 8, 11
 #define F_FACE_LAYER_STICKER {U6, U7, U8, R0, R3, R6, D2, D1, D0, L8, L5, L2}
 #define R_FACE_LAYER_STICKER {U8, U5, U2, B0, B3, B6, D8, D5, D2, F8, F5, F2}
 #define U_FACE_LAYER_STICKER {B2, B1, B0, R2, R1, R0, F2, F1, F0, L2, L1, L0}
@@ -13,7 +13,7 @@
 
 typedef struct
 {
-    char stickers[54]
+    char stickers[54];
 } Cube;
 
 enum kociemba
@@ -96,11 +96,9 @@ const int layer_stickers[6][12] = {
 void turn_face_counter_clockwise(char face, Cube *cube)
 {
     char temp;
-
-    // Set the face to turn
-    char *selected_face;
     const int *layer;
     int face_start_sticker;
+
     switch (face)
     {
     case 'U':
@@ -132,20 +130,36 @@ void turn_face_counter_clockwise(char face, Cube *cube)
     }
 
     // Chosen face corner permutation
-    temp = selected_face[0];
-    selected_face[0] = selected_face[2];
-    selected_face[2] = selected_face[8];
-    selected_face[8] = selected_face[6];
-    selected_face[6] = temp;
+    temp = cube->stickers[face_start_sticker];
+    cube->stickers[face_start_sticker] = cube->stickers[face_start_sticker + 2];
+    cube->stickers[face_start_sticker + 2] = cube->stickers[face_start_sticker + 8];
+    cube->stickers[face_start_sticker + 8] = cube->stickers[face_start_sticker + 6];
+    cube->stickers[face_start_sticker + 6] = temp;
 
     // Chosen face edge permutation
-    temp = selected_face[1];
-    selected_face[1] = selected_face[5];
-    selected_face[5] = selected_face[7];
-    selected_face[7] = selected_face[3];
-    selected_face[3] = temp;
+    temp = cube->stickers[face_start_sticker + 1];
+    cube->stickers[face_start_sticker + 1] = cube->stickers[face_start_sticker + 5];
+    cube->stickers[face_start_sticker + 5] = cube->stickers[face_start_sticker + 7];
+    cube->stickers[face_start_sticker + 7] = cube->stickers[face_start_sticker + 3];
+    cube->stickers[face_start_sticker + 3] = temp;
 
     // Chosen face edge layer permutation
+    temp = cube->stickers[layer[1]];
+    cube->stickers[layer[1]] = cube->stickers[layer[4]];
+    cube->stickers[layer[4]] = cube->stickers[layer[7]];
+    cube->stickers[layer[7]] = cube->stickers[layer[10]];
+    cube->stickers[layer[10]] = temp;
 
     // Chosen face corner layer permutation
+    temp = cube->stickers[layer[0]];
+    cube->stickers[layer[0]] = cube->stickers[layer[3]];
+    cube->stickers[layer[3]] = cube->stickers[layer[6]];
+    cube->stickers[layer[6]] = cube->stickers[layer[9]];
+    cube->stickers[layer[9]] = temp;
+
+    temp = cube->stickers[layer[2]];
+    cube->stickers[layer[2]] = cube->stickers[layer[5]];
+    cube->stickers[layer[5]] = cube->stickers[layer[8]];
+    cube->stickers[layer[8]] = cube->stickers[layer[11]];
+    cube->stickers[layer[11]] = temp;
 }
