@@ -1,42 +1,52 @@
 #include <stdio.h>
 #include "cube.h"
+#include "input.h"
+
+#include <stdio.h>
+
+void clear_screen(void)
+{
+    printf("\x1b[2J\x1b[H");
+    fflush(stdout);
+}
+
+void display_ui(Cube *cube)
+{
+    printf("Rubik's Cube\n");
+    printf("\nControls:\n"
+           " - 'j' / 'f' : U  / U' (Up)\n"
+           " - 'i' / 'k' : R  / R' (Right)\n"
+           " - 'h' / 'g' : F  / F' (Front)\n"
+           " - 's' / 'l' : D  / D' (Down)\n"
+           " - 'd' / 'e' : L  / L' (Left)\n"
+           " - 'w' / 'o' : B  / B' (Back)\n"
+           " - 'q'       : Exit\n\n");
+    print_facelet(cube);
+}
 
 int main()
 {
     char option;
     Cube my_cube;
     init_cube(&my_cube);
+
+    display_ui(&my_cube);
+
     while (1)
     {
-        printf("Rubik's Cube\n");
-
-        printf("Select an option\n");
-        printf("\n - 'i' to check the cube; \n - 'u' to turn U face clockwise, \n - 'z' to turn U face counter clockwise, \n - 'q' to exit\n");
         scanf(" %c", &option);
+        clear_screen();
 
-        printf("\n-- Option: %c --\n", option);
-
-        if (option == 'i' || option == 'I')
-        {
-            print_facelet(&my_cube);
-        }
-        else if (option == 'u' || option == 'U')
-        {
-            turn_face_clockwise('U', &my_cube);
-        }
-        else if (option == 'z' || option == 'Z')
-        {
-            turn_face_counter_clockwise('U', &my_cube);
-        }
-        else if (option == 'q' || option == 'Q')
+        if (option == 'q' || option == 'Q')
         {
             break;
         }
         else
         {
-            printf("Use valid command\n");
-            continue;
+            input_to_move(option, &my_cube);
         }
+
+        display_ui(&my_cube);
     }
 
     return 0;
