@@ -1,0 +1,1 @@
+void input_to_move(char c, Cube *cube);
