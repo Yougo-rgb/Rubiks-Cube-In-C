@@ -1,6 +1,14 @@
 #include "cube.h"
 #include <stdio.h>
 
+#define COLOR_U "\x1b[1;37m"
+#define COLOR_F "\x1b[0;32m"
+#define COLOR_R "\x1b[0;31m"
+#define COLOR_D "\x1b[1;33m"
+#define COLOR_L "\x1b[38;5;208m"
+#define COLOR_B "\x1b[0;34m"
+#define COLOR_RES "\x1b[0m"
+
 const int layer_stickers[6][12] = {
     U_FACE_LAYER_STICKER,
     R_FACE_LAYER_STICKER,
@@ -99,13 +107,74 @@ void turn_face_clockwise(char face, Cube *cube)
     turn_face_counter_clockwise(face, cube);
 }
 
+const char *get_color(char sticker)
+{
+    switch (sticker)
+    {
+    case 'U':
+        return COLOR_U;
+    case 'F':
+        return COLOR_F;
+    case 'R':
+        return COLOR_R;
+    case 'D':
+        return COLOR_D;
+    case 'L':
+        return COLOR_L;
+    case 'B':
+        return COLOR_B;
+    default:
+        return COLOR_RES;
+    }
+};
+
+// TODO Use render.c to make a 3D cube instead
 void print_facelet(Cube *cube)
 {
-    const char *faces[] = {"U", "R", "F", "D", "L", "B"};
+    const char *s = cube->stickers;
+    int l_offset = 27;
+    int f_offset = 9;
+    int b_offset = 36;
+
     printf("===CUBE STATE===\n");
-    for (int f = 0; f < 6; f++)
+    // U face
+    for (int i = 0; i <= 6; i += 3)
     {
-        printf("%s: %.9s\n", faces[f], &cube->stickers[f * 9]);
+        printf("         [%s%c" COLOR_RES "][%s%c" COLOR_RES "][%s%c" COLOR_RES "]\n",
+               get_color(s[i]), s[i],
+               get_color(s[i + 1]), s[i + 1],
+               get_color(s[i + 2]), s[i + 2]);
+    }
+    // L, F, R, B faces
+    for (int i = 9; i <= 15; i += 3)
+    {
+        printf("[%s%c" COLOR_RES "][%s%c" COLOR_RES "][%s%c" COLOR_RES "]",
+               get_color(s[i + l_offset]), s[i + l_offset],
+               get_color(s[i + l_offset + 1]), s[i + l_offset + 1],
+               get_color(s[i + l_offset + 2]), s[i + l_offset + 2]);
+
+        printf("[%s%c" COLOR_RES "][%s%c" COLOR_RES "][%s%c" COLOR_RES "]",
+               get_color(s[i + f_offset]), s[i + f_offset],
+               get_color(s[i + f_offset + 1]), s[i + f_offset + 1],
+               get_color(s[i + f_offset + 2]), s[i + f_offset + 2]);
+
+        printf("[%s%c" COLOR_RES "][%s%c" COLOR_RES "][%s%c" COLOR_RES "]",
+               get_color(s[i]), s[i],
+               get_color(s[i + 1]), s[i + 1],
+               get_color(s[i + 2]), s[i + 2]);
+
+        printf("[%s%c" COLOR_RES "][%s%c" COLOR_RES "][%s%c" COLOR_RES "]\n",
+               get_color(s[i + b_offset]), s[i + b_offset],
+               get_color(s[i + b_offset + 1]), s[i + b_offset + 1],
+               get_color(s[i + b_offset + 2]), s[i + b_offset + 2]);
+    }
+    // D face
+    for (int i = 27; i <= 33; i += 3)
+    {
+        printf("         [%s%c" COLOR_RES "][%s%c" COLOR_RES "][%s%c" COLOR_RES "]\n",
+               get_color(s[i]), s[i],
+               get_color(s[i + 1]), s[i + 1],
+               get_color(s[i + 2]), s[i + 2]);
     }
     printf("================\n");
 }
