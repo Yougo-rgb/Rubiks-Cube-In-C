@@ -1,15 +1,19 @@
-#define FACE_STICKER_NUMBER 9
-
-// All 12 stickers around a specific face
-// Edge permutation, index: 1, 4, 7, 10
-// Corner A permutation index: 0, 3, 6, 9
-// Corner B permutation index: 2, 5, 8, 11
+/*
+All 12 stickers around a specific face
+Edge permutation, index: 1, 4, 7, 10
+Corner A permutation index: 0, 3, 6, 9
+Corner B permutation index: 2, 5, 8, 11
+*/
 #define F_FACE_LAYER_STICKER {U6, U7, U8, R0, R3, R6, D2, D1, D0, L8, L5, L2}
 #define R_FACE_LAYER_STICKER {U8, U5, U2, B0, B3, B6, D8, D5, D2, F8, F5, F2}
 #define U_FACE_LAYER_STICKER {B2, B1, B0, R2, R1, R0, F2, F1, F0, L2, L1, L0}
 #define D_FACE_LAYER_STICKER {F6, F7, F8, R6, R7, R8, B6, B7, B8, L6, L7, L8}
 #define L_FACE_LAYER_STICKER {U0, U3, U6, F0, F3, F6, D0, D3, D6, B8, B5, B2}
-#define B_FACE_LAYER_STICKER {U2, U1, U0, L0, L3, L6, D8, D7, D6, R8, R3, R0}
+#define B_FACE_LAYER_STICKER {U2, U1, U0, L0, L3, L6, D6, D7, D8, R8, R5, R2}
+
+#define FACE_STICKER_NUMBER 9
+
+extern const int layer_stickers[6][12];
 
 typedef struct
 {
@@ -84,8 +88,6 @@ enum kociemba
     B7 = 52,
     B8 = 53
 };
-
-extern const int layer_stickers[6][12];
 
 void turn_face_counter_clockwise(char face, Cube *cube);
 void turn_face_clockwise(char face, Cube *cube);
